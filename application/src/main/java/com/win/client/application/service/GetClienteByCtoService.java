@@ -36,7 +36,7 @@ public class GetClienteByCtoService implements GetClientByCtoUseCase {
                         .descriptionDepartament(client.getDescriptionDepartament())
                         .descriptionBox(client.getDescriptionBox())
                         .documentCi(client.getDocumentCi())
-                        .descriptionUbigeo(client.getDescriptionUbigeo())
+                        .descriptionDistrict(client.getDescriptionDistrict())
                         .statusAccount(client.getStatus())
                         .build()
         ).collect(Collectors.toSet());

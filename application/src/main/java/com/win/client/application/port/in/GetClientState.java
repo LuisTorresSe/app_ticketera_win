@@ -13,7 +13,7 @@ public class GetClientState {
     private String orderCode;
     private String portGpon;
     private String descriptionDepartament;
-    private String descriptionUbigeo;
+    private String descriptionDistrict;
     private String descriptionBox;
     private String codeBox;
     private String contrata;

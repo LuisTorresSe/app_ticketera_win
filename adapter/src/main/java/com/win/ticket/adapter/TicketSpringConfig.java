@@ -4,11 +4,13 @@ import com.win.managerat.application.port.out.ManagerPort;
 import com.win.ticket.adapter.out.TicketPersistenceAdapter;
 import com.win.ticket.adapter.out.TicketRepository;
 
+import com.win.ticket.application.port.in.GetAllTicketUseCase;
 import com.win.ticket.application.port.in.closeTicketUseCase.CloseTicketUseCase;
 import com.win.ticket.application.port.in.createTicketUseCase.CreateTicketUseCase;
 import com.win.ticket.application.port.out.TicketPort;
 import com.win.ticket.application.service.CloseTicketService;
 import com.win.ticket.application.service.CreateTicketService;
+import com.win.ticket.application.service.GetAllTicketService;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
@@ -28,5 +30,10 @@ public class TicketSpringConfig {
     @Bean
     public CloseTicketUseCase closeTicketUseCase(TicketPort ticketPort, ManagerPort managerPort) {
         return new CloseTicketService(ticketPort, managerPort);
+    }
+
+    @Bean
+    public GetAllTicketUseCase getAllTicketUseCase(TicketPort ticketPort, ManagerPort managerPort) {
+        return new GetAllTicketService(ticketPort);
     }
 }

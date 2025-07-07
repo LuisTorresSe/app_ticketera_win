@@ -38,7 +38,7 @@ public class Ticket {
     private String nodeAffected;
     private String oltAffected;
     private String comment;
-        private Set<Subticket> subTickets;
+    private Set<Subticket> subTickets;
 
     public static Ticket createTicket(
             TicketType type,

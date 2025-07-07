@@ -1,6 +1,8 @@
 package com.win.ticket.adapter.in;
 
 
+import com.win.ticket.application.port.in.GetAllTicketUseCase;
+import com.win.ticket.application.port.in.GetTicketState;
 import com.win.ticket.application.port.in.closeTicketUseCase.CloseTicketCommand;
 import com.win.ticket.application.port.in.closeTicketUseCase.CloseTicketState;
 import com.win.ticket.application.port.in.closeTicketUseCase.CloseTicketUseCase;
@@ -10,24 +12,27 @@ import com.win.ticket.application.port.in.createTicketUseCase.CreateTicketUseCas
 import com.win.ticket.domain.Ticket;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @RestController
 @RequestMapping("api/v1/ticket")
+@CrossOrigin("http://localhost:5173")
 public class TicketController {
 
     private final CreateTicketUseCase createTicketUseCase;
     private final CloseTicketUseCase closeTicketUseCase;
+    private final GetAllTicketUseCase getAllTicketUseCase;
 
     public TicketController(
             CreateTicketUseCase createTicketUseCase,
-            CloseTicketUseCase closeTicketUseCase
+            CloseTicketUseCase closeTicketUseCase,
+            GetAllTicketUseCase getAllTicketUseCase
     ) {
         this.createTicketUseCase = createTicketUseCase;
         this.closeTicketUseCase = closeTicketUseCase;
+        this.getAllTicketUseCase = getAllTicketUseCase;
     }
 
     @PostMapping
@@ -61,4 +66,9 @@ public class TicketController {
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
 
+
+    @GetMapping
+    public ResponseEntity<List<GetTicketState>> findAll() {
+        return new ResponseEntity<>(getAllTicketUseCase.execute(), HttpStatus.OK);
+    }
 }

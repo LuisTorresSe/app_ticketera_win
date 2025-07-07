@@ -8,12 +8,13 @@ import com.win.ticket.domain.TicketType;
 import lombok.Getter;
 
 import java.time.LocalDateTime;
+import java.util.UUID;
 
 @Getter
 public class CreateTicketState {
     private final Long ticketId;
     private final String codeTicket;
-    private final Long createManagerId;
+    private final UUID createManagerId;
     private final TicketType type;
     private final TicketReport report;
     private final Diagnosis diagnosis;
@@ -27,7 +28,7 @@ public class CreateTicketState {
     public CreateTicketState(
             Long ticketId,
             String codeTicket,
-            Long createManagerId,
+            UUID createManagerId,
             TicketType type,
             TicketReport report,
             Diagnosis diagnosis,

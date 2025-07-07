@@ -12,8 +12,8 @@ import com.win.ticket.domain.Ticket;
 
 
 public class CreateTicketService implements CreateTicketUseCase {
-    private ManagerPort managerPort;
-    private TicketPort ticketPort;
+    private final ManagerPort managerPort;
+    private final TicketPort ticketPort;
 
     public CreateTicketService(ManagerPort managerPort, TicketPort ticketPort) {
         this.managerPort = managerPort;
@@ -36,10 +36,12 @@ public class CreateTicketService implements CreateTicketUseCase {
                 command.getNodeAffected(),
                 command.getOltAffected(),
                 command.getComment()
-
         );
 
+        System.out.println("estamos aca");
         Ticket savedTicket = ticketPort.save(newTicket);
+
+        System.out.println(savedTicket);
 
         savedTicket.generateCodeTicket();
 

@@ -182,4 +182,10 @@ public class Subticket {
         serverDowns.add(serverDown);
     }
 
+    public void setCounClient(int countClient) {
+        if(countClient < 0){
+            throw new IllegalArgumentException("Subticket count cannot be negative");
+        }
+        this.countClient = countClient;
+    }
 }

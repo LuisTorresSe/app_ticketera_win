@@ -4,6 +4,7 @@ import com.win.managerat.application.port.out.ManagerPort;
 import com.win.managerat.domain.ManagerAt;
 
 import java.util.Optional;
+import java.util.UUID;
 
 public class ManagerPersistenceAdapter implements ManagerPort {
     private final ManagerAtRepository managerAtRepository;
@@ -12,8 +13,8 @@ public class ManagerPersistenceAdapter implements ManagerPort {
         this.managerAtRepository = managerAtRepository;
     }
     @Override
-    public Optional<ManagerAt> findById(Long id) {
-        return managerAtRepository.findById(id)
-                .map(ManagerAtMapper::toEntity);
+    public Optional<ManagerAt> findById(UUID id) {
+
+        return this.managerAtRepository.findByManagerId(id).map(ManagerAtMapper::toEntity);
     }
 }

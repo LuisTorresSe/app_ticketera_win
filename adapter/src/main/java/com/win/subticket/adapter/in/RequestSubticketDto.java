@@ -6,10 +6,11 @@ import jakarta.validation.constraints.NotNull;
 
 import java.time.LocalDateTime;
 import java.util.Set;
+import java.util.UUID;
 
 public record RequestSubticketDto(
         @NotNull
-        Long createManagerId,
+        UUID createManagerId,
 
         @NotNull
         Long ticketId,
@@ -19,8 +20,7 @@ public record RequestSubticketDto(
         String cto,
         @Nullable
         String commentary,
-        Set<RequestServerDown> requestServerDown
-
+        String city
 ) {
 
 }

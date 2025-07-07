@@ -29,10 +29,10 @@ public class TicketJpaEntity {
     private String codeTicket;
 
     @ManyToOne
-    @JoinColumn(name = "manager_at_aperture_manager_id")
+    @JoinColumn(name = "manager_at_aperture_manager_id" , referencedColumnName = "id")
     private ManagerAtJpaEntity managerAtAperture;
     @ManyToOne
-    @JoinColumn(name = "manager_at_close_manager_id")
+    @JoinColumn(name = "manager_at_close_manager_id", referencedColumnName = "id")
     private ManagerAtJpaEntity managerAtClose;
 
     @Enumerated(EnumType.STRING)

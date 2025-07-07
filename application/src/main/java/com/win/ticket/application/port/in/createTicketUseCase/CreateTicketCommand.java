@@ -6,11 +6,12 @@ import com.win.ticket.domain.TicketType;
 import lombok.Getter;
 
 import java.time.LocalDateTime;
+import java.util.UUID;
 
 @Getter
 public class CreateTicketCommand {
 
-    private Long managerId;
+    private UUID managerId;
     private TicketType type;
     private TicketReport report;
     private Diagnosis diagnosis;
@@ -27,7 +28,7 @@ public class CreateTicketCommand {
                                Boolean unavailability,
                                String nodeAffected,
                                String oltAffected,
-                               Long managerId,
+                               UUID managerId,
                                String comment) {
         this.type = type;
         this.managerId= managerId;

@@ -4,5 +4,5 @@ import com.win.subticket.domain.Subticket;
 
 public interface CreateSubticketUseCase {
 
-    Subticket execute(CreateSubticketCommand command);
+    SubticketState execute(CreateSubticketCommand command);
 }

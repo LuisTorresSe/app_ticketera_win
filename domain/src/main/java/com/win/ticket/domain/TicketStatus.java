@@ -2,5 +2,7 @@ package com.win.ticket.domain;
 
 public enum TicketStatus {
     PENDIENTE,
-    SOLUCIONADO
+    SOLUCIONADO,
+    EN_EJECUCION,
+    EN_PAUSA
 }
