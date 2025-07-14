@@ -8,7 +8,7 @@ import java.util.UUID;
 
 @Builder
 @Getter
-public class CloseTicketState {
+public class ChangeTicketStatusState {
     private UUID managerId;
     private Long ticketId;
     private TicketStatus status;

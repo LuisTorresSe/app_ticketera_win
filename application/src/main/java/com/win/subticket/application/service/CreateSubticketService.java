@@ -69,11 +69,13 @@ public class CreateSubticketService implements CreateSubticketUseCase {
         Subticket newSubticket = Subticket.create(
                 code,
                 manager,
+                command.getCreateEventAt(),
                 command.getDateReportPext(),
                 command.getCard(),
                 command.getPort(),
                 command.getCto(),
                 command.getCommentary(),
+                command.getCity(),
                 serversdowns
         );
 

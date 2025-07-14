@@ -30,7 +30,7 @@ public class GetTicketState {
        private final String nodeAffected;
        private final String oltAffected;
        private final String comment;
-       private Set<SubticketState> subtickets;
+       private final Set<SubticketState> subtickets;
 
     public GetTicketState(Long ticketId, String codeTicket,
                           ManagerAtState managerAtAperture,

@@ -15,6 +15,7 @@ import lombok.NoArgsConstructor;
 
 import java.time.LocalDateTime;
 import java.util.HashSet;
+import java.util.Optional;
 import java.util.Set;
 
 @Getter
@@ -38,6 +39,10 @@ public class Ticket {
     private String nodeAffected;
     private String oltAffected;
     private String comment;
+    private Optional<String> reasonForPause;
+    private LocalDateTime statusChangedAt;
+    private ManagerAt managerAtChangeStatus ;
+
     private Set<Subticket> subTickets;
 
     public static Ticket createTicket(
@@ -50,7 +55,7 @@ public class Ticket {
             String nodeAffected,
             String oltAffected,
             String comment
-    ){
+    ) {
         Ticket newTicket = new Ticket();
         newTicket.type = type;
         newTicket.report = report;
@@ -66,7 +71,9 @@ public class Ticket {
         newTicket.verifyEventDate(createAtEvent);
 
         return newTicket;
-    };
+    }
+
+    ;
 
     public static Ticket reconstructor(
             Long ticketId,
@@ -120,24 +127,47 @@ public class Ticket {
         this.codeTicket = String.format("W-CR-%05d-%s", this.ticketId, chartInitialType);
     }
 
-    public void closeTicket(ManagerAt managerAtClose) {
-        if (managerAtClose == null) {
+    public void changeStatus(ManagerAt managerAt, TicketStatus newStatus, Optional<String> reasonForPause) {
+        if (managerAt == null) {
             throw new CannotCloseTicketException("Manager at close cannot be null");
         }
+
         if (this.isClosed()) {
             throw new TicketAlreadyCloseException("Ticket is already closed");
         }
 
-        boolean hasPendingSubtickets = this.subTickets.stream()
-                .anyMatch(subticket -> SubticketStatus.PENDIENTE.equals(subticket.getStatusSubticket()));
+        if(newStatus.equals(TicketStatus.EN_EJECUCION)) {
+            this.statusTicket = newStatus;
+            this.statusChangedAt = LocalDateTime.now();
 
-        if (hasPendingSubtickets) {
-            throw new CannotCloseTicketException("Cannot close ticket with pending subtickets");
         }
 
-        this.statusTicket = TicketStatus.SOLUCIONADO;
-        this.managerAtClose = managerAtClose;
-        this.closeAtEvent = LocalDateTime.now();
+        if(newStatus.equals(TicketStatus.EN_PAUSA)) {
+            this.statusTicket = newStatus;
+            if(reasonForPause.isEmpty()) {
+                throw new InvalidDateException("Reason for pause cannot be null");
+            }
+            this.reasonForPause = reasonForPause;
+            this.statusChangedAt = LocalDateTime.now();
+        }
+        if(newStatus.equals(TicketStatus.PENDIENTE)) {
+            this.statusTicket = newStatus;
+            this.statusChangedAt = LocalDateTime.now();
+        }
+
+        if(newStatus.equals(TicketStatus.SOLUCIONADO)) {
+            boolean hasPendingSubtickets = this.subTickets.stream()
+                    .anyMatch(subticket -> SubticketStatus.PENDIENTE.equals(subticket.getStatusSubticket()));
+
+            if (hasPendingSubtickets) {
+                throw new CannotCloseTicketException("Cannot close ticket with pending subtickets");
+            }
+
+            this.statusTicket = newStatus;
+            this.managerAtClose = managerAt;
+            this.closeAtEvent = LocalDateTime.now();
+        }
+
     }
 
     public void assignReport(TicketReport report) {
@@ -179,6 +209,7 @@ public class Ticket {
     }
 
     public boolean isClosed() {
+
         return TicketStatus.SOLUCIONADO.equals(this.statusTicket);
     }
 

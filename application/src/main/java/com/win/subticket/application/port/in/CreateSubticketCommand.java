@@ -21,6 +21,8 @@ public class CreateSubticketCommand extends SelfValidating<CreateSubticketComman
     @NotNull(message = "El ID del ticket es obligatorio")
     private final Long ticketId;
 
+    private final LocalDateTime createEventAt;
+
     @NotNull(message = "La fecha de reporte es obligatoria")
     private final LocalDateTime dateReportPext;
 
@@ -33,6 +35,7 @@ public class CreateSubticketCommand extends SelfValidating<CreateSubticketComman
     private final Integer port;
 
 
+    private final String city;
 
     @NotBlank(message = "La CTO no puede estar vacía")
     private final String cto;
@@ -42,11 +45,13 @@ public class CreateSubticketCommand extends SelfValidating<CreateSubticketComman
     public CreateSubticketCommand(
             UUID createManagerId,
             Long ticketId,
+            LocalDateTime createEvent,
             LocalDateTime dateReportPext,
             Integer card,
             Integer port,
             String cto,
-            String commentary
+            String commentary,
+            String city
 
     ) {
         this.createManagerId = createManagerId;
@@ -56,6 +61,8 @@ public class CreateSubticketCommand extends SelfValidating<CreateSubticketComman
         this.port = port;
         this.cto = cto;
         this.commentary = commentary;
+        this.city = city;
+        this.createEventAt = createEvent;
         this.validateSelf();
     }
 }

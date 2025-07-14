@@ -1,15 +1,16 @@
 package com.win.ticket.adapter.in;
 
 
+import com.win.ApiResponse;
+import com.win.subticket.application.port.in.CloseSubticketUseCase;
 import com.win.ticket.application.port.in.GetAllTicketUseCase;
 import com.win.ticket.application.port.in.GetTicketState;
-import com.win.ticket.application.port.in.closeTicketUseCase.CloseTicketCommand;
-import com.win.ticket.application.port.in.closeTicketUseCase.CloseTicketState;
-import com.win.ticket.application.port.in.closeTicketUseCase.CloseTicketUseCase;
+import com.win.ticket.application.port.in.closeTicketUseCase.ChangeTicketStatusCommand;
+import com.win.ticket.application.port.in.closeTicketUseCase.ChangeTicketStatusState;
+import com.win.ticket.application.port.in.closeTicketUseCase.ChangeTicketStatusUseCase;
 import com.win.ticket.application.port.in.createTicketUseCase.CreateTicketCommand;
 import com.win.ticket.application.port.in.createTicketUseCase.CreateTicketState;
 import com.win.ticket.application.port.in.createTicketUseCase.CreateTicketUseCase;
-import com.win.ticket.domain.Ticket;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -22,17 +23,20 @@ import java.util.List;
 public class TicketController {
 
     private final CreateTicketUseCase createTicketUseCase;
-    private final CloseTicketUseCase closeTicketUseCase;
+    private final ChangeTicketStatusUseCase changeTicketStatusUseCase;
     private final GetAllTicketUseCase getAllTicketUseCase;
+
+
 
     public TicketController(
             CreateTicketUseCase createTicketUseCase,
-            CloseTicketUseCase closeTicketUseCase,
-            GetAllTicketUseCase getAllTicketUseCase
+            ChangeTicketStatusUseCase changeTicketStatusUseCase,
+            GetAllTicketUseCase getAllTicketUseCase, CloseSubticketUseCase closeSubticketUseCase
     ) {
         this.createTicketUseCase = createTicketUseCase;
-        this.closeTicketUseCase = closeTicketUseCase;
+        this.changeTicketStatusUseCase = changeTicketStatusUseCase;
         this.getAllTicketUseCase = getAllTicketUseCase;
+
     }
 
     @PostMapping
@@ -55,15 +59,19 @@ public class TicketController {
         return new ResponseEntity<>(response, HttpStatus.CREATED);
     }
 
-    @PostMapping("close")
-    public ResponseEntity<CloseTicketState> closeTicket(
-            @RequestBody RequestCloseTicketDto request
+    @PutMapping("changeStatus")
+    public ResponseEntity<ApiResponse<ChangeTicketStatusState>> closeTicket(
+            @RequestBody RequestChangeTicketStatusDto request
     ){
-        CloseTicketCommand command = new CloseTicketCommand(
-                request.managerId(), request.ticketId()
+        ChangeTicketStatusCommand command = new ChangeTicketStatusCommand(
+                request.managerId(),
+                request.ticketId(),
+                request.status(),
+                request.reasonForPause()
         );
-        CloseTicketState response = closeTicketUseCase.execute(command);
-        return new ResponseEntity<>(response, HttpStatus.OK);
+
+        ChangeTicketStatusState response = changeTicketStatusUseCase.execute(command);
+        return new ResponseEntity<>(new ApiResponse<>(response), HttpStatus.OK);
     }
 
 

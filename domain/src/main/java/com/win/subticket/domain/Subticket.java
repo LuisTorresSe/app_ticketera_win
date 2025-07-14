@@ -16,7 +16,6 @@ import java.util.List;
 import java.util.Set;
 
 @Getter
-@NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class Subticket {
     private Long subticketId;
     private String subticketCode; // NECESARIO CREATE
@@ -50,22 +49,28 @@ public class Subticket {
     private SubticketStatus statusSubticket; // AUTOMATICO PENDIENTE AL CREAR
     private String commentary; // NULO AL CREAR
     private String responsable; // esto lo pone el asesor al final
+    private String statusPosSLA;
+
+
     private Set<ServerDown> serverDowns; // nullO SE BUSCA POR LA CTO A LOS CLIENTE Y LUEGO SE ACEPTA SI AGREGA O NO
+
 
     public static Subticket create(
             String subticketCode,
             ManagerAt createManagerAt,
+            LocalDateTime createEventAt,
             LocalDateTime dateReportPext,
             Integer card,
             Integer port,
             String ctoAffected,
             String commentary,
+            String city,
             Set<ServerDown> serverdowns
     ) {
         Subticket subticket = new Subticket();
         subticket.subticketCode = subticketCode;
         subticket.createManagerAt = createManagerAt;
-        subticket.createEventAt = LocalDateTime.now();
+        subticket.createEventAt = createEventAt;
         subticket.dateReportPext = dateReportPext;
         subticket.card = card;
         subticket.port = port;
@@ -73,6 +78,7 @@ public class Subticket {
         subticket.commentary = commentary;
         subticket.statusSubticket = SubticketStatus.PENDIENTE;
         subticket.serverDowns = new HashSet<>(serverdowns);
+        subticket.city = city;
         return subticket;
     }
 
@@ -187,5 +193,38 @@ public class Subticket {
             throw new IllegalArgumentException("Subticket count cannot be negative");
         }
         this.countClient = countClient;
+    }
+
+    public void close(ManagerAt managerAt){
+        this.closeManagerAt = managerAt;
+        this.statusSubticket = SubticketStatus.SOLUCIONADO;
+    }
+
+    public void assignSolution(String solution) {
+        this.solutions = solution;
+    }
+
+    public void assignCloseEventAt(LocalDateTime date) {
+        this.closeEventAt = date;
+    }
+
+    public void assignBadPraxis() {
+        this.badPraxis = true;
+    }
+
+    public void assignCommentary(String commentary) {
+        this.commentary = commentary;
+    }
+
+    public void assignCauseProblem(String causeProblem) {
+        this.causeProblem = causeProblem;
+    }
+
+    public void assingResponsable(String responsable) {
+        this.responsable = responsable;
+    }
+
+    public void assingPostSLA(String postSLA) {
+        this.statusPosSLA = postSLA;
     }
 }

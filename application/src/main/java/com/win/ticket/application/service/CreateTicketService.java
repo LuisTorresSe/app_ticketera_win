@@ -38,10 +38,7 @@ public class CreateTicketService implements CreateTicketUseCase {
                 command.getComment()
         );
 
-        System.out.println("estamos aca");
         Ticket savedTicket = ticketPort.save(newTicket);
-
-        System.out.println(savedTicket);
 
         savedTicket.generateCodeTicket();
 

@@ -8,12 +8,11 @@ import java.util.Date;
 public class ApiErrorResponse {
     private String errorCode;
     private String message;
-    private Date timestamp;
-
+    private boolean success;
     public ApiErrorResponse(String errorCode, String message) {
+        this.success = false;
         this.errorCode = errorCode;
         this.message = message;
-        this.timestamp = new Date();
     }
 }
 

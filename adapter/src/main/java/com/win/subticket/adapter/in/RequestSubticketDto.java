@@ -11,10 +11,10 @@ import java.util.UUID;
 public record RequestSubticketDto(
         @NotNull
         UUID createManagerId,
-
         @NotNull
         Long ticketId,
-        LocalDateTime dateReportPext,
+        LocalDateTime eventStartDate,
+        LocalDateTime reportedToPextDate,
         Integer card,
         Integer port,
         String cto,
@@ -22,5 +22,4 @@ public record RequestSubticketDto(
         String commentary,
         String city
 ) {
-
 }
