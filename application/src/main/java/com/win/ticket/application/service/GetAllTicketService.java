@@ -26,7 +26,7 @@ public class GetAllTicketService implements GetAllTicketUseCase {
 
         List<Ticket> tickets = ticketPort.findAll();
 
-        List<GetTicketState> states = tickets.stream().map(
+        return tickets.stream().map(
             ticket -> {
                 ManagerAtState managerAperture = new ManagerAtState(ticket.getManagerAtAperture().getManagerId(), ticket.getManagerAtAperture().getFullname());
 
@@ -99,10 +99,10 @@ public class GetAllTicketService implements GetAllTicketUseCase {
                         ticket.getNodeAffected(),
                         ticket.getOltAffected(),
                         ticket.getComment(),
+                        ticket.getAssignTo(),
                         subticketState
                 );
             }
         ).toList();
-        return states  ;
     }
 }

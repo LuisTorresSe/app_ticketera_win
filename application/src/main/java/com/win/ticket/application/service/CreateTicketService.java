@@ -35,15 +35,20 @@ public class CreateTicketService implements CreateTicketUseCase {
                 command.getUnavailability(),
                 command.getNodeAffected(),
                 command.getOltAffected(),
-                command.getComment()
+                command.getComment(),
+                command.getAssignTo()
         );
+
+        System.out.println(newTicket.getAssignTo()+"assign toen use case 0");
 
         Ticket savedTicket = ticketPort.save(newTicket);
 
+        System.out.println(savedTicket.getAssignTo() +" assign to en use case 1");
         savedTicket.generateCodeTicket();
 
         Ticket updateTicket =  ticketPort.save(savedTicket);
 
+        System.out.println(updateTicket.getAssignTo()+"assignTOO en usecase 2");
         return new CreateTicketState(
                 updateTicket.getTicketId(),
                 updateTicket.getCodeTicket(),
@@ -56,7 +61,8 @@ public class CreateTicketService implements CreateTicketUseCase {
                 updateTicket.getNodeAffected(),
                 updateTicket.getOltAffected(),
                 updateTicket.getComment(),
-                updateTicket.getStatusTicket()
+                updateTicket.getStatusTicket(),
+                updateTicket.getAssignTo()
         );
     }
 }

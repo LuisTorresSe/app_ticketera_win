@@ -6,6 +6,8 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.util.UUID;
+
 @Entity
 @Data
 @Table(name = "permissions")
@@ -15,6 +17,9 @@ import lombok.NoArgsConstructor;
 public class PermissionJpaEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private  Long permissionId;
+    private  Long id;
+
+    @Column(nullable = false, unique = true)
+    private UUID permissionId;
     private  String permissionName;
 }

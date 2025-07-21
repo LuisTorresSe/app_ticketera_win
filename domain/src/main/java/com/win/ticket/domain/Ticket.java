@@ -39,10 +39,10 @@ public class Ticket {
     private String nodeAffected;
     private String oltAffected;
     private String comment;
+    private String assignTo;
     private Optional<String> reasonForPause;
     private LocalDateTime statusChangedAt;
-    private ManagerAt managerAtChangeStatus ;
-
+    private ManagerAt managerAtChangeStatus;
     private Set<Subticket> subTickets;
 
     public static Ticket createTicket(
@@ -54,7 +54,8 @@ public class Ticket {
             Boolean unavailability,
             String nodeAffected,
             String oltAffected,
-            String comment
+            String comment,
+            String assignTo
     ) {
         Ticket newTicket = new Ticket();
         newTicket.type = type;
@@ -68,12 +69,30 @@ public class Ticket {
         newTicket.managerAtAperture = managerAtAperture;
         newTicket.statusTicket = TicketStatus.PENDIENTE; // Asignar un estado inicial
         newTicket.subTickets = new HashSet<>(); // Inicializar col
+        newTicket.assignTo = assignTo;
         newTicket.verifyEventDate(createAtEvent);
-
         return newTicket;
     }
 
-    ;
+    public void update(
+             TicketType type,
+             ManagerAt managerAtAperture,
+             TicketReport report,
+             Diagnosis diagnosis,
+             LocalDateTime createAtEvent,
+             Boolean unavailability,
+             String nodeAffected,
+             String oltAffected
+    ) {
+        if (type != null) this.type = type;
+        if (managerAtAperture != null) this.managerAtAperture = managerAtAperture;
+        if (report != null) this.report = report;
+        if (diagnosis != null) this.diagnosis = diagnosis;
+        if (createAtEvent != null) this.createAtEvent = createAtEvent;
+        if (unavailability != null) this.unavailability = unavailability;
+        if (nodeAffected != null) this.nodeAffected = nodeAffected;
+        if (oltAffected != null) this.oltAffected = oltAffected;
+    }
 
     public static Ticket reconstructor(
             Long ticketId,
@@ -90,6 +109,7 @@ public class Ticket {
             String nodeAffected,
             String oltAffected,
             String comment,
+            String assignTo,
             Set<Subticket> subTickets
     ) {
 
@@ -108,6 +128,7 @@ public class Ticket {
         newTicket.nodeAffected = nodeAffected;
         newTicket.oltAffected = oltAffected;
         newTicket.comment = comment;
+        newTicket.assignTo = assignTo;
         newTicket.subTickets = subTickets != null ? new HashSet<>(subTickets) : new HashSet<>();
         return newTicket;
     }
@@ -120,6 +141,14 @@ public class Ticket {
             throw new InvalidDateException("Event date cannot be in the future");
         }
     }
+
+    public void changeCreateAtEvent() {
+        this.createAtEvent = subTickets.stream()
+                .map(Subticket::getCreateEventAt)
+                .min(LocalDateTime::compareTo)
+                .orElse(this.createAtEvent);
+    }
+
 
     public void generateCodeTicket() {
         if (this.ticketId == null) return;

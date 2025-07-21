@@ -87,7 +87,7 @@ public class SubticketController {
 
         return ResponseEntity
                 .status(HttpStatus.ACCEPTED)
-                .body(new ApiResponse<>(response));
+                .body(ApiResponse.success(response));
     }
 
 

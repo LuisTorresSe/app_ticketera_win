@@ -18,7 +18,7 @@ public class TicketPersistenceAdapter implements TicketPort {
     public Ticket save(Ticket ticket) {
         TicketJpaEntity newTicket = TicketMapper.toJpaEntity(ticket);
 
-        System.out.println(newTicket);
+        System.out.println(newTicket.getAssignTo()+"assignTOO en adapter ");
         TicketJpaEntity savedTicket = ticketRepository.save(newTicket);
         return TicketMapper.toDomainEntity(savedTicket);
     }

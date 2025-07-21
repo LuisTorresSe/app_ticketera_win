@@ -24,6 +24,8 @@ public class ChangeTicketStatusService implements ChangeTicketStatusUseCase {
                 () -> new NotFoundTicketException("Ticket not found")
         );
 
+
+
         ManagerAt manager = managerPort.findById(command.getManagerId()).orElseThrow(
                 () -> new NotFoundManagerAtException("Manager not found")
         );

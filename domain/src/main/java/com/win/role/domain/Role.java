@@ -10,10 +10,12 @@ import java.util.UUID;
 
 @Getter
 public class Role {
+    private final Long id;
     private final UUID roleId;
     private final String roleName;
     private Set<Permission> permissions;
-    public Role(UUID roleId, String roleName, Set<Permission> permissions) {
+    public Role(Long id, UUID roleId, String roleName, Set<Permission> permissions) {
+        this.id = id;
         this.roleId = roleId;
         this.roleName = roleName;
         this.permissions = new HashSet<>(permissions);

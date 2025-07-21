@@ -2,15 +2,14 @@ package com.win.ticket.adapter.in;
 
 
 import com.win.ApiResponse;
-import com.win.subticket.application.port.in.CloseSubticketUseCase;
-import com.win.ticket.application.port.in.GetAllTicketUseCase;
-import com.win.ticket.application.port.in.GetTicketState;
+import com.win.ticket.application.port.in.*;
 import com.win.ticket.application.port.in.closeTicketUseCase.ChangeTicketStatusCommand;
 import com.win.ticket.application.port.in.closeTicketUseCase.ChangeTicketStatusState;
 import com.win.ticket.application.port.in.closeTicketUseCase.ChangeTicketStatusUseCase;
 import com.win.ticket.application.port.in.createTicketUseCase.CreateTicketCommand;
 import com.win.ticket.application.port.in.createTicketUseCase.CreateTicketState;
 import com.win.ticket.application.port.in.createTicketUseCase.CreateTicketUseCase;
+import org.springframework.data.repository.query.Param;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -25,18 +24,19 @@ public class TicketController {
     private final CreateTicketUseCase createTicketUseCase;
     private final ChangeTicketStatusUseCase changeTicketStatusUseCase;
     private final GetAllTicketUseCase getAllTicketUseCase;
-
+    private final UpdatedTicketUseCase updatedTicketUseCase;
 
 
     public TicketController(
             CreateTicketUseCase createTicketUseCase,
             ChangeTicketStatusUseCase changeTicketStatusUseCase,
-            GetAllTicketUseCase getAllTicketUseCase, CloseSubticketUseCase closeSubticketUseCase
+            GetAllTicketUseCase getAllTicketUseCase,
+            UpdatedTicketUseCase updatedTicketUseCase, UpdatedTicketUseCase updatedTicketUseCase1
     ) {
         this.createTicketUseCase = createTicketUseCase;
         this.changeTicketStatusUseCase = changeTicketStatusUseCase;
         this.getAllTicketUseCase = getAllTicketUseCase;
-
+        this.updatedTicketUseCase = updatedTicketUseCase1;
     }
 
     @PostMapping
@@ -50,6 +50,7 @@ public class TicketController {
                 request.diagnosis(),
                 request.createAtEvent(),
                 request.unavailability(),
+                request.assignTo(),
                 request.nodeAffected(),
                 request.oltAffected(),
                 request.managerId(),
@@ -71,7 +72,26 @@ public class TicketController {
         );
 
         ChangeTicketStatusState response = changeTicketStatusUseCase.execute(command);
-        return new ResponseEntity<>(new ApiResponse<>(response), HttpStatus.OK);
+        return new ResponseEntity<>( ApiResponse.success(response), HttpStatus.OK);
+    }
+
+    @PutMapping("updated/{id}")
+    public ResponseEntity<ApiResponse<GetTicketState>> updateTicket(@RequestBody UpdatedTicketRequest request,  @PathVariable("id") Long ticketId){
+        UpdatedTicketCommand command = new UpdatedTicketCommand(
+                ticketId,
+                request.managerId(),
+                request.type(),
+                request.report(),
+                request.diagnosis(),
+                request.createAtEvent(),
+                request.unavailability(),
+                request.nodeAffected(),
+                request.oltAffected()
+                );
+
+        GetTicketState response = updatedTicketUseCase.execute(command);
+
+        return new ResponseEntity<>(ApiResponse.success(response), HttpStatus.OK);
     }
 
 
@@ -79,4 +99,8 @@ public class TicketController {
     public ResponseEntity<List<GetTicketState>> findAll() {
         return new ResponseEntity<>(getAllTicketUseCase.execute(), HttpStatus.OK);
     }
+
+
+
+
 }

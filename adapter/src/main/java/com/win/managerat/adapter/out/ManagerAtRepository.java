@@ -12,4 +12,6 @@ import java.util.UUID;
 public interface ManagerAtRepository extends JpaRepository<ManagerAtJpaEntity, Long> {
 
     Optional<ManagerAtJpaEntity> findByManagerId(UUID managerId);
+
+   Optional< ManagerAtJpaEntity> findByEmail(String email);
 }

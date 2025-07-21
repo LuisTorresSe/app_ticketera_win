@@ -18,6 +18,7 @@ import com.win.ticket.application.port.out.TicketPort;
 import com.win.ticket.domain.Ticket;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDateTime;
 import java.util.Optional;
 import java.util.Set;
 import java.util.stream.Collectors;
@@ -82,6 +83,7 @@ public class CreateSubticketService implements CreateSubticketUseCase {
         newSubticket.setCounClient(countClients);
 
         ticket.addSubticket(newSubticket);
+        ticket.changeCreateAtEvent();
 
 
         Ticket updatedTicket = ticketPort.save(ticket);

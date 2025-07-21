@@ -18,6 +18,7 @@ public class RoleMapper {
                 .collect(Collectors.toSet());
 
         return new Role(
+                jpaEntity.getId(),
                 jpaEntity.getRoleId(),
                 jpaEntity.getRoleName(),
                 permissions

@@ -52,7 +52,13 @@ public class TicketJpaEntity {
     private Boolean unavailability;
     private String nodeAffected;
     private String oltAffected;
+    private String reasonForPause;
+    private String assignTo;
     private String comment;
+    @ManyToOne
+    @JoinColumn(name = "managerAt_change_status_manager_id", referencedColumnName = "id")
+    private ManagerAtJpaEntity managerAtChangeStatus;
+    private LocalDateTime statusChangedAt;
     @OneToMany(mappedBy = "ticket", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.EAGER)
     private Set<SubticketJpaEntity> subTickets = new HashSet<>();
 

@@ -1,10 +1,12 @@
 package com.win.auth.application.port.in;
 
-import java.util.Map;
+import java.util.Set;
+import java.util.UUID;
 
 public record LoginState(
-        Map<String, String> data,
-        boolean success,
-        String message
-) {
-}
+        UUID userId,
+        String email,
+        String fullName,
+        String roles,
+        Set<String> permissions
+) {}
