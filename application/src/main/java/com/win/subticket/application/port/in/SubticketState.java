@@ -4,6 +4,7 @@ import com.win.managerat.application.port.in.ManagerAtState;
 import com.win.managerat.domain.ManagerAt;
 import com.win.serverdown.application.port.in.GetServerDownState;
 import com.win.serverdown.domain.ServerDown;
+import com.win.subticket.domain.Subticket;
 import com.win.subticket.domain.SubticketStatus;
 import lombok.Builder;
 import lombok.Getter;
@@ -42,5 +43,33 @@ public class SubticketState {
     private String responsable;
 
     private List<GetServerDownState> serverdowns;
+    public static SubticketState from(Subticket subticket) {
+        return SubticketState.builder()
+                .subticketId(subticket.getSubticketId())
+                .subticketCode(subticket.getSubticketCode())
+                .createManagerAt(ManagerAtState.from(subticket.getCreateManagerAt()))
+                .closeManagerAt(subticket.getCloseManagerAt() != null ? ManagerAtState.from(subticket.getCloseManagerAt()) : null)
+                .createEventAt(subticket.getCreateEventAt())
+                .closeEventAt(subticket.getCloseEventAt())
+                .dateReportPext(subticket.getDateReportPext())
+                .dateStopLabores(subticket.getDateStopLabores())
+                .dateStartLabores(subticket.getDateStartLabores())
+                .card(subticket.getCard())
+                .port(subticket.getPort())
+                .ctoAffected(subticket.getCtoAffected())
+                .city(subticket.getCity())
+                .causeProblem(subticket.getCauseProblem())
+                .countClient(subticket.getCountClient())
+                .badPraxis(subticket.getBadPraxis())
+                .solutions(subticket.getSolutions())
+                .statusSubticket(subticket.getStatusSubticket())
+                .commentary(subticket.getCommentary())
+                .responsable(subticket.getResponsable())
+                .serverdowns(subticket.getServerDowns().stream()
+                        .map(
+                                GetServerDownState::from)
+                        .toList())
+                .build();
+    }
 
 }

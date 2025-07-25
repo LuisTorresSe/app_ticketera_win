@@ -242,5 +242,20 @@ public class Ticket {
         return TicketStatus.SOLUCIONADO.equals(this.statusTicket);
     }
 
+    public void updateTicket(Subticket updatedSubticket) {
+        if (updatedSubticket == null) {
+            throw new IllegalArgumentException("El subticket no puede ser nulo");
+        }
+
+        // Elimina el subticket viejo si existe
+        this.subTickets.removeIf(s -> s.getSubticketId().equals(updatedSubticket.getSubticketId()));
+
+        // Añade el nuevo subticket actualizado
+        this.subTickets.add(updatedSubticket);
+
+        // Actualiza la fecha de creación del evento del ticket si el nuevo subticket es más antiguo
+        changeCreateAtEvent();
+    }
+
 
 }

@@ -138,6 +138,62 @@ public class Subticket {
         return subticket;
     }
 
+
+    public Subticket update(
+            ManagerAt updateManagerAt,
+            LocalDateTime createEventAt,
+            LocalDateTime dateReportPext,
+            Integer card,
+            Integer port,
+            String ctoAffected,
+            String commentary,
+            String city,
+            int countClient
+    ) {
+        if (SubticketStatus.SOLUCIONADO.equals(this.statusSubticket)) {
+            throw new IllegalStateException("No se puede actualizar un subticket ya solucionado.");
+        }
+
+        if (updateManagerAt == null) {
+            throw new IllegalArgumentException("El manager que actualiza no puede ser nulo.");
+        }
+
+        // Actualiza los campos modificables
+        if (createEventAt != null) {
+            this.createEventAt = createEventAt;
+        }
+
+        if (dateReportPext != null) {
+            this.dateReportPext = dateReportPext;
+        }
+
+        if (card != null && card >= 0) {
+            this.card = card;
+        }
+
+        if (port != null && port >= 0) {
+            this.port = port;
+        }
+
+        if (ctoAffected != null && !ctoAffected.isBlank()) {
+            this.ctoAffected = ctoAffected;
+        }
+
+        if (commentary != null) {
+            this.commentary = commentary;
+        }
+
+        if (city != null && !city.isBlank()) {
+            this.city = city;
+        }
+
+        // Sobrescribe el manager creador con el que actualizó
+        this.createManagerAt = updateManagerAt;
+        this.countClient = countClient;
+        return this;
+    }
+
+
     public void setDurationTimeStopWork() {
         if (dateStartLabores != null && dateStopLabores != null) {
             this.timeStopWork = Duration.between(dateStartLabores, dateStopLabores);
