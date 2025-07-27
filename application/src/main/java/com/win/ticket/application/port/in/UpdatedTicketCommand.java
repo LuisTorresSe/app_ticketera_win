@@ -1,6 +1,7 @@
 package com.win.ticket.application.port.in;
 
 import com.win.ticket.domain.Diagnosis;
+import com.win.ticket.domain.EmailStatus;
 import com.win.ticket.domain.TicketReport;
 import com.win.ticket.domain.TicketType;
 
@@ -17,7 +18,8 @@ public record UpdatedTicketCommand
                  LocalDateTime createAtEvent,
                  Boolean unavailability,
                  String nodeAffected,
-                 String oltAffected
+                 String oltAffected,
+                EmailStatus emailStatus
         ){
 
 

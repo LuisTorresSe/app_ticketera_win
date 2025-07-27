@@ -43,6 +43,7 @@ public class Ticket {
     private Optional<String> reasonForPause;
     private LocalDateTime statusChangedAt;
     private ManagerAt managerAtChangeStatus;
+    private EmailStatus emailStatus;
     private Set<Subticket> subTickets;
 
     public static Ticket createTicket(
@@ -55,7 +56,8 @@ public class Ticket {
             String nodeAffected,
             String oltAffected,
             String comment,
-            String assignTo
+            String assignTo,
+            EmailStatus emailStatus
     ) {
         Ticket newTicket = new Ticket();
         newTicket.type = type;
@@ -70,6 +72,7 @@ public class Ticket {
         newTicket.statusTicket = TicketStatus.PENDIENTE; // Asignar un estado inicial
         newTicket.subTickets = new HashSet<>(); // Inicializar col
         newTicket.assignTo = assignTo;
+        newTicket.emailStatus = EmailStatus.NO_DECLARADO;
         newTicket.verifyEventDate(createAtEvent);
         return newTicket;
     }
@@ -82,7 +85,8 @@ public class Ticket {
              LocalDateTime createAtEvent,
              Boolean unavailability,
              String nodeAffected,
-             String oltAffected
+             String oltAffected,
+             EmailStatus emailStatus
     ) {
         if (type != null) this.type = type;
         if (managerAtAperture != null) this.managerAtAperture = managerAtAperture;
@@ -92,6 +96,7 @@ public class Ticket {
         if (unavailability != null) this.unavailability = unavailability;
         if (nodeAffected != null) this.nodeAffected = nodeAffected;
         if (oltAffected != null) this.oltAffected = oltAffected;
+        if (emailStatus != null) this.emailStatus = emailStatus;
     }
 
     public static Ticket reconstructor(
@@ -110,7 +115,8 @@ public class Ticket {
             String oltAffected,
             String comment,
             String assignTo,
-            Set<Subticket> subTickets
+            Set<Subticket> subTickets,
+            EmailStatus emailStatus
     ) {
 
         Ticket newTicket = new Ticket();
@@ -130,6 +136,7 @@ public class Ticket {
         newTicket.comment = comment;
         newTicket.assignTo = assignTo;
         newTicket.subTickets = subTickets != null ? new HashSet<>(subTickets) : new HashSet<>();
+        newTicket.emailStatus = emailStatus;
         return newTicket;
     }
 
@@ -242,7 +249,7 @@ public class Ticket {
         return TicketStatus.SOLUCIONADO.equals(this.statusTicket);
     }
 
-    public void updateTicket(Subticket updatedSubticket) {
+    public void updateSubticket(Subticket updatedSubticket) {
         if (updatedSubticket == null) {
             throw new IllegalArgumentException("El subticket no puede ser nulo");
         }

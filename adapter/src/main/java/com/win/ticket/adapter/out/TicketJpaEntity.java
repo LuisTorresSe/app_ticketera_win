@@ -4,10 +4,7 @@ package com.win.ticket.adapter.out;
 import com.win.managerat.adapter.out.ManagerAtJpaEntity;
 import com.win.subticket.adapter.out.SubticketJpaEntity;
 import com.win.subticket.domain.Subticket;
-import com.win.ticket.domain.Diagnosis;
-import com.win.ticket.domain.TicketReport;
-import com.win.ticket.domain.TicketStatus;
-import com.win.ticket.domain.TicketType;
+import com.win.ticket.domain.*;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -46,6 +43,9 @@ public class TicketJpaEntity {
 
     @Enumerated(EnumType.STRING)
     private Diagnosis diagnosis;
+
+    @Enumerated(EnumType.STRING)
+    private EmailStatus emailStatus;
 
     private LocalDateTime createAtEvent;
     private LocalDateTime closeAtEvent;

@@ -9,9 +9,6 @@ import com.win.ticket.application.port.in.*;
 import com.win.ticket.application.port.out.TicketPort;
 import com.win.ticket.domain.Ticket;
 
-import java.util.Set;
-import java.util.stream.Collectors;
-
 public class UpdatedTicketService implements UpdatedTicketUseCase {
     private final TicketPort ticketPort;
     private final ManagerPort managerPort;
@@ -39,7 +36,8 @@ public class UpdatedTicketService implements UpdatedTicketUseCase {
                 command.createAtEvent(),
                 command.unavailability(),
                 command.nodeAffected(),
-                command.oltAffected()
+                command.oltAffected(),
+                command.emailStatus()
         );
 
         Ticket savedTicket = ticketPort.save(findTicket);

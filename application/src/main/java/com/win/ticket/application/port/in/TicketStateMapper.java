@@ -92,7 +92,8 @@ public class TicketStateMapper {
                 ticket.getOltAffected(),
                 ticket.getComment(),
                 ticket.getAssignTo(),
-                subticketStates
+                subticketStates,
+                ticket.getEmailStatus()
         );
     }
 

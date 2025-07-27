@@ -46,7 +46,7 @@ public class UpdateSubticketService implements UpdateSubticketUseCase {
         );
 
         // Actualiza el ticket
-        ticket.updateTicket(updatedSubticket);
+        ticket.updateSubticket(updatedSubticket);
 
         // Persistencia
         ticketPort.save(ticket);

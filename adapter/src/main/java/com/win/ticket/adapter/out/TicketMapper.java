@@ -46,7 +46,8 @@ public class TicketMapper {
                 jpaEntity.getOltAffected(),
                 jpaEntity.getComment(),
                 jpaEntity.getAssignTo(),
-                subtickets
+                subtickets,
+                jpaEntity.getEmailStatus()
         );
     }
 
@@ -77,6 +78,7 @@ public class TicketMapper {
                 .managerAtAperture(managerAperture)
                 .managerAtClose(managerClose)
                 .assignTo(domain.getAssignTo())
+                .emailStatus(domain.getEmailStatus())
                 .build();
 
         // Relación bidireccional: cada Subticket debe tener el TicketJpaEntity asignado

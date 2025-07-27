@@ -2,10 +2,7 @@ package com.win.ticket.application.port.in;
 
 import com.win.managerat.application.port.in.ManagerAtState;
 import com.win.subticket.application.port.in.SubticketState;
-import com.win.ticket.domain.Diagnosis;
-import com.win.ticket.domain.TicketReport;
-import com.win.ticket.domain.TicketStatus;
-import com.win.ticket.domain.TicketType;
+import com.win.ticket.domain.*;
 import lombok.Getter;
 
 import java.time.LocalDateTime;
@@ -28,5 +25,7 @@ public record GetTicketState(
         String oltAffected,
         String comment,
         String assignTo,
-        Set<SubticketState> subtickets)
+        Set<SubticketState> subtickets,
+        EmailStatus emailStatus
+)
 { }

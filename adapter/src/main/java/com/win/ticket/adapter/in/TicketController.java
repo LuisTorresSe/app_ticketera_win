@@ -31,7 +31,7 @@ public class TicketController {
             CreateTicketUseCase createTicketUseCase,
             ChangeTicketStatusUseCase changeTicketStatusUseCase,
             GetAllTicketUseCase getAllTicketUseCase,
-            UpdatedTicketUseCase updatedTicketUseCase, UpdatedTicketUseCase updatedTicketUseCase1
+            UpdatedTicketUseCase updatedTicketUseCase1
     ) {
         this.createTicketUseCase = createTicketUseCase;
         this.changeTicketStatusUseCase = changeTicketStatusUseCase;
@@ -54,7 +54,8 @@ public class TicketController {
                 request.nodeAffected(),
                 request.oltAffected(),
                 request.managerId(),
-                request.comment()
+                request.comment(),
+                request.emailStatus()
         );
         CreateTicketState response =  createTicketUseCase.execute(command);
         return new ResponseEntity<>(response, HttpStatus.CREATED);
@@ -86,7 +87,8 @@ public class TicketController {
                 request.createAtEvent(),
                 request.unavailability(),
                 request.nodeAffected(),
-                request.oltAffected()
+                request.oltAffected(),
+                request.emailStatus()
                 );
 
         GetTicketState response = updatedTicketUseCase.execute(command);

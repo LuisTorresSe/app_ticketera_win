@@ -36,7 +36,8 @@ public class CreateTicketService implements CreateTicketUseCase {
                 command.getNodeAffected(),
                 command.getOltAffected(),
                 command.getComment(),
-                command.getAssignTo()
+                command.getAssignTo(),
+                command.getEmailStatus()
         );
 
         System.out.println(newTicket.getAssignTo()+"assign toen use case 0");

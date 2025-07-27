@@ -100,7 +100,8 @@ public class GetAllTicketService implements GetAllTicketUseCase {
                         ticket.getOltAffected(),
                         ticket.getComment(),
                         ticket.getAssignTo(),
-                        subticketState
+                        subticketState,
+                        ticket.getEmailStatus()
                 );
             }
         ).toList();

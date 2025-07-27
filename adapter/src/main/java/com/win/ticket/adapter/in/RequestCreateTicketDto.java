@@ -1,6 +1,7 @@
 package com.win.ticket.adapter.in;
 
 import com.win.ticket.domain.Diagnosis;
+import com.win.ticket.domain.EmailStatus;
 import com.win.ticket.domain.TicketReport;
 import com.win.ticket.domain.TicketType;
 
@@ -16,5 +17,6 @@ public record RequestCreateTicketDto(UUID managerId,
                                      Boolean unavailability,
                                      String nodeAffected,
                                      String oltAffected,
-                                     String comment) {
+                                     String comment,
+                                     EmailStatus emailStatus) {
 }

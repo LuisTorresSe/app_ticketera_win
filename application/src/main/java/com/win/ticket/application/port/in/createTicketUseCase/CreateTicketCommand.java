@@ -1,6 +1,7 @@
 package com.win.ticket.application.port.in.createTicketUseCase;
 
 import com.win.ticket.domain.Diagnosis;
+import com.win.ticket.domain.EmailStatus;
 import com.win.ticket.domain.TicketReport;
 import com.win.ticket.domain.TicketType;
 import lombok.Getter;
@@ -21,6 +22,7 @@ public class CreateTicketCommand {
     private final String nodeAffected;
     private final String oltAffected;
     private final String comment;
+    private final EmailStatus emailStatus;
 
     public CreateTicketCommand(TicketType type,
                                TicketReport report,
@@ -31,7 +33,8 @@ public class CreateTicketCommand {
                                String nodeAffected,
                                String oltAffected,
                                UUID managerId,
-                               String comment
+                               String comment,
+                               EmailStatus emailStatus
 
     ) {
         this.type = type;
@@ -44,5 +47,6 @@ public class CreateTicketCommand {
         this.nodeAffected = nodeAffected;
         this.oltAffected = oltAffected;
         this.comment = comment;
+        this.emailStatus = emailStatus;
     }
 }
