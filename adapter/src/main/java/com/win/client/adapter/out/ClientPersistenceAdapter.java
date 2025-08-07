@@ -17,7 +17,7 @@ public class ClientPersistenceAdapter implements ClientPort {
 
     @Override
     public Optional<Set<Client>> getClientsByCto(String cto) {
-        List<ClientJpaEntity> clientsJpa = clientRepository.findAllByCtoAndStatusNot(cto, "BAJAS");
+        List<ClientJpaEntity> clientsJpa = clientRepository.findAllByCtoAndStatusActiveAndSuspende(cto, "BAJAS");
 
         if (clientsJpa.isEmpty()) {
             return Optional.empty();

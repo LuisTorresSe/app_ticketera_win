@@ -9,9 +9,9 @@ import java.util.List;
 public interface ClientRepository  extends JpaRepository<ClientJpaEntity, Long> {
 
     @Query("""
-    select c from ClientJpaEntity c where c.cto = :cto and c.status != :status 
+    select c from ClientJpaEntity c where c.cto = :cto and (c.status = 'ACTIVO' OR c.status = 'SUSPENDIDO')
     """)
-    List<ClientJpaEntity> findAllByCtoAndStatusNot(
+    List<ClientJpaEntity> findAllByCtoAndStatusActiveAndSuspende(
             @Param("cto") String cto,
             @Param("status") String status);
 }

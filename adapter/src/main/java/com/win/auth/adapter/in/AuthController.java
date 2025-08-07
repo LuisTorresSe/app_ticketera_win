@@ -21,7 +21,8 @@ public class AuthController {
     @PostMapping("login")
     public ResponseEntity<ApiResponse<LoginState>> login(@RequestBody LoginRequest loginRequest) {
 
-        LoginCommand command = new LoginCommand(loginRequest.email(), loginRequest.password());
+        LoginCommand command = new LoginCommand(loginRequest.email(),
+                                                loginRequest.password());
 
         LoginState execute = this.loginUseCase.execute(command);
 
